@@ -1,0 +1,73 @@
+// ========== DARK THEME NAVBAR STYLING ==========
+.navbar {
+  background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+  padding: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid #374151;
+}
+
+.nav-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30px;
+}
+
+.app-title {
+  color: #f3f4f6;
+  font-size: 1.8rem;
+  margin: 0;
+  padding: 18px 0;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+
+  li {
+    display: inline;
+  }
+
+  a {
+    color: #d1d5db;
+    text-decoration: none;
+    padding: 10px 20px;
+    display: inline-block;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    border-radius: 6px;
+    font-size: 0.95rem;
+
+    &:hover {
+      background-color: rgba(96, 165, 250, 0.1);
+      color: #93c5fd;
+      transform: translateY(-2px);
+    }
+
+    &.active {
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+      color: white;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+  }
+}
+
+.main-content {
+  min-height: calc(100vh - 70px);
+  background: linear-gradient(to bottom, #0f1419 0%, #1a202c 100%);
+  padding: 40px 0;
+}
+
+.main-content {
+  min-height: calc(100vh - 60px);
+}

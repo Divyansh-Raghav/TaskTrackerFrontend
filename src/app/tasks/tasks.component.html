@@ -1,0 +1,115 @@
+<div class="tasks-container">
+  <h1>Task Tracker</h1>
+
+  <!-- Create Task Form -->
+  <div class="create-form">
+    <h2>Create New Task</h2>
+    <form (ngSubmit)="createTask()">
+      <div class="form-group">
+        <label for="title">Title *</label>
+        <input
+          type="text"
+          id="title"
+          [(ngModel)]="newTask.Title"
+          name="title"
+          required
+          placeholder="Enter task title"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea
+          id="description"
+          [(ngModel)]="newTask.Description"
+          name="description"
+          placeholder="Enter task description"
+          rows="3"
+        ></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="assignedUser">Assign To</label>
+        <select id="assignedUser" [(ngModel)]="newTask.AssignedUserId" name="assignedUser">
+          <option [ngValue]="undefined">Unassigned</option>
+          <option *ngFor="let user of users" [ngValue]="user.id">
+            {{ user.name }}
+          </option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-primary">Create Task</button>
+    </form>
+  </div>
+
+  <!-- Tasks Table -->
+  <div class="tasks-list">
+    <h2>All Tasks</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Status</th>
+          <th>Assigned To</th>
+          <th>Created At</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let task of tasks; trackBy: trackByTaskId">
+          <!-- View Mode -->
+          <ng-container *ngIf="!isEditing(task.id)">
+            <td>{{ task.title }}</td>
+            <td>{{ task.description || '-' }}</td>
+            <td>
+              <span [class]="'status-badge status-' + task.status">
+                {{ getStatusName(task.status) }}
+              </span>
+            </td>
+            <td>{{ getUserName(task.assignedUserId) }}</td>
+            <td>{{ task.createdAt | date: 'short' }}</td>
+            <td>
+              <button class="btn btn-sm btn-edit" (click)="startEdit(task)">Edit</button>
+              <button class="btn btn-sm btn-delete" (click)="deleteTask(task.id)">Delete</button>
+            </td>
+          </ng-container>
+
+          <!-- Edit Mode -->
+          <ng-container *ngIf="isEditing(task.id) && editTask">
+            <td>
+              <input type="text" [(ngModel)]="editTask.Title" class="edit-input" required />
+            </td>
+            <td>
+              <input type="text" [(ngModel)]="editTask.Description" class="edit-input" />
+            </td>
+            <td>
+              <select [(ngModel)]="editTask.Status" class="edit-select">
+                <option *ngFor="let status of getAvailableStatuses(task.status)" [ngValue]="status">
+                  {{ getStatusName(status) }}
+                </option>
+              </select>
+              <small class="status-hint">ToDo → InProgress → Done</small>
+            </td>
+            <td>
+              <select [(ngModel)]="editTask.AssignedUserId" class="edit-select">
+                <option [ngValue]="undefined">Unassigned</option>
+                <option *ngFor="let user of users" [ngValue]="user.id">
+                  {{ user.name }}
+                </option>
+              </select>
+            </td>
+            <td>{{ task.createdAt | date: 'short' }}</td>
+            <td>
+              <button class="btn btn-sm btn-save" (click)="saveEdit(task.id)">Save</button>
+              <button class="btn btn-sm btn-cancel" (click)="cancelEdit()">Cancel</button>
+            </td>
+          </ng-container>
+        </tr>
+        <tr *ngIf="tasks.length === 0">
+          <td colspan="6" class="no-tasks">No tasks found. Create one to get started!</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

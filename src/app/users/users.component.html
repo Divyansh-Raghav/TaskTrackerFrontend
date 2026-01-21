@@ -1,0 +1,45 @@
+<div class="users-container">
+  <h1>Users</h1>
+
+  <!-- Create User Form -->
+  <div class="create-form">
+    <h2>Add New User</h2>
+    <form (ngSubmit)="createUser()">
+      <div class="form-group">
+        <label for="name">Name *</label>
+        <input
+          type="text"
+          id="name"
+          [(ngModel)]="newUser.Name"
+          name="name"
+          required
+          placeholder="Enter user name"
+        />
+      </div>
+
+      <button type="submit" class="btn btn-primary">Add User</button>
+    </form>
+  </div>
+
+  <!-- Users List -->
+  <div class="users-list">
+    <h2>All Users</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users; trackBy: trackByUserId">
+          <td>{{ user.id }}</td>
+          <td>{{ user.name }}</td>
+        </tr>
+        <tr *ngIf="users.length === 0">
+          <td colspan="2" class="no-users">No users found. Add one to get started!</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
