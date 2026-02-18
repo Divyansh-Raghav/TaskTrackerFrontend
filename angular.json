@@ -33,7 +33,7 @@
             "styles": [
               "src/styles.scss"
             ],
-            "outputMode": "browser"
+            "outputMode": "static"
           },
           "configurations": {
             "production": {
